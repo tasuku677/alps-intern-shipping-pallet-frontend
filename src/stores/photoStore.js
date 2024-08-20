@@ -4,7 +4,6 @@ import { defineStore } from 'pinia';
 export const usePhotoStore = defineStore('photoStore', {
   state: () => ({
     photos: [],
-    palletId: '',  // 仮のパレットID
     numberOfPictures: 4,
   }),
   actions: {
