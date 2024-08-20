@@ -1,8 +1,8 @@
 function checkEmployeeId(employeeId) {
     // Generate a random boolean value
     const randomValue = Math.random() < 0.5;
-    // return randomValue;
-    return true;
+    return randomValue;
+    // return true;
 }
 
 function checkPalletId(password) {
@@ -14,7 +14,6 @@ function checkPalletId(password) {
     // }
     // return true;
     const randomValue = Math.random() < 0.5;
-    alert('checkPalletId');
     return randomValue;
 }
 

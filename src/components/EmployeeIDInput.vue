@@ -17,11 +17,11 @@ const handleEmployeeIdInput = () => {
   preEmployeeId.value = idStore.employeeId;
   if (checkEmployeeId(idStore.employeeId)) {
     idStore.setShowPalletIdInput(true);
-    employeeIdInput.value.$el.style.backgroundColor = 'white';
+    employeeIdInput.value.$el.style.color = 'success';
     employeeIdInput.value.blur()
   }
   else {
-    employeeIdInput.value.employeeIdInput.$el.style.backgroundColor = 'red';
+    employeeIdInput.value.$el.style.color = 'red';
   }
 };
 </script>

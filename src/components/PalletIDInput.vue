@@ -14,12 +14,18 @@
   import { checkPalletId } from '../utils/helper';
   
   const idStore = useIdStore();
+  const prePalletId = ref('');
+  const palletIdInput = ref(null);
   
   const handlePalletIdInput = () => {
+    idStore.palletId = idStore.palletId.slice(prePalletId.value.length);
+    prePalletId.value = idStore.palletId;
     if (checkPalletId(idStore.palletId)) {
-      emit('validPalletId');
+      idStore.setShowCamera(true);
+      palletIdInput.value.$el.style.color = 'success';
+      palletIdInput.value.blur();
     } else {
-      // エラー処理
+      palletIdInput.value.$el.style.color = 'red';
     }
   };
   </script>

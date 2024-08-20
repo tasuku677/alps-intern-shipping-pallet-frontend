@@ -11,12 +11,12 @@
         <PalletIDInput ref="palletIdInput"/>
       </v-col>
 
-      <!-- Camera Component
+      <!-- Camera Component -->
       <v-col cols="12" v-show="idStore.showCamera">
         <CameraComponent />
       </v-col>
 
-      Submit Button -->
+      <!-- Submit Button -->
       <!-- <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
         <v-btn color="success" @click="submitPicture">Submit</v-btn> -->
       <!-- </v-col> -->
@@ -30,7 +30,7 @@ import { usePhotoStore } from '../stores/photoStore';
 import { useIdStore } from '../stores/idStore';
 import EmployeeIDInput from './EmployeeIDInput';
 import PalletIDInput from './PalletIDInput';
-// import CameraComponent from './CameraComponent';
+import CameraComponent from './CameraComponent';
 
 const photoStore = usePhotoStore();
 const idStore = useIdStore();
