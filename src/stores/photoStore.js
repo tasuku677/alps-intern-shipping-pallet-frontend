@@ -5,6 +5,7 @@ export const usePhotoStore = defineStore('photoStore', {
   state: () => ({
     photos: [],
     numberOfPictures: 4,
+    maxNumberOfPictures: 4,
   }),
   actions: {
     addPhoto(photoData) {

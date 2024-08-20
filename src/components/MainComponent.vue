@@ -17,9 +17,9 @@
       </v-col>
 
       <!-- Submit Button -->
-      <!-- <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
-        <v-btn color="success" @click="submitPicture">Submit</v-btn> -->
-      <!-- </v-col> -->
+      <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
+        <v-btn color="success" @click="submitPicture">Submit</v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>

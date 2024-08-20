@@ -22,7 +22,7 @@
     prePalletId.value = idStore.palletId;
     if (checkPalletId(idStore.palletId)) {
       idStore.setShowCamera(true);
-      palletIdInput.value.$el.style.color = 'success';
+      palletIdInput.value.$el.style.color = '#1976D2';
       palletIdInput.value.blur();
     } else {
       palletIdInput.value.$el.style.color = 'red';

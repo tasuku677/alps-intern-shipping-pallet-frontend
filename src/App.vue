@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import MainComponent from './components/MainInputComponent.vue';
+import MainComponent from './components/MainComponent';
 
   //
 </script>
