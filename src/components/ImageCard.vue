@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-const propos = defineProps({
+const props = defineProps({
     photos: Array,
 });
 

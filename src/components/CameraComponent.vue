@@ -4,7 +4,7 @@
       Take Photo
     </v-btn>
     <p :style="{ color: photoStore.numberOfPictures > 0 ? 'red' : 'black' }">
-      {{ 4 - photoStore.numberOfPictures }} / {{ 4 }}
+      {{ 4 - photoStore.numberOfPictures }} / {{ photoStore.maxNumberOfPictures }}
     </p>
     <div class="d-flex flex-column align-center mb-5">
       <video ref="video" width="80%" autoplay></video>
@@ -13,7 +13,7 @@
     <div id="photo-container">
       <v-row>
         <v-col v-for="(photo, index) in photoStore.photos.slice().reverse()" :key="index" cols="12" md="4">
-          <v-card class="custom-border mb-5 d-flex flex-column align-center pt-5" >
+          <v-card class="custom-border mb-5 d-flex flex-column align-center pt-5">
             <v-img :src="photo.data" width="80%"></v-img>
             <v-card-text>
               <p style="color: red">{{ photo.name }}</p>
@@ -35,8 +35,14 @@ import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { getTimeStamp } from '../utils/helper';
 
+import ImageCard from './ImageCard.vue';
+
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiDelete } from '@mdi/js';
+
+let mediaStream = null;
+
+
 
 const path = ref(mdiDelete);
 
@@ -58,6 +64,7 @@ const activateCamera = () => {
 
   navigator.mediaDevices.getUserMedia(constraints)
     .then((stream) => {
+      mediaStream = stream;
       video.value.srcObject = stream;
       video.value.play();
     })
@@ -65,6 +72,13 @@ const activateCamera = () => {
       console.error(`An error occurred: ${err}`);
     });
 };
+
+const deactivateCamera = () => {
+  if (mediaStream) {
+    mediaStream.getTracks()[0].stop();
+    mediaStream = null;
+  }
+}
 
 const takePhoto = () => {
   if (photoStore.numberOfPictures > 0) {
@@ -85,14 +99,24 @@ const removePhoto = (index) => {
   photoStore.removePhoto(index);
 };
 
+// watch(() => idStore.showCamera, (newVal) => {
+//   if (newVal) {
+//     activateCamera();
+//   } 
+// });
+
 onMounted(() => {
   activateCamera();
 });
+
+// onUnmounted(() => {
+//   deactivateCamera();
+// });
 </script>
 
 <style scoped>
 .custom-border {
-  border: 0.1px solid #000; /* 黒いボーダー */
+  border: 0.1px solid #000;
+  /* 黒いボーダー */
 }
-
 </style>

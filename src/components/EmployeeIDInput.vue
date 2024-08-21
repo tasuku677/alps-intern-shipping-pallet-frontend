@@ -28,23 +28,3 @@ const handleEmployeeIdInput = () => {
 
 <style scoped></style>
 
-<!--   
-
-<template>
-  <v-text-field v-model="employeeId" label="Employee ID" @input="validateEmployeeId" autofocus></v-text-field>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { checkEmployeeId } from '../utils/helper'; // 有効なIDを確認するための関数
-
-const employeeId = ref('');
-
-function validateEmployeeId() {
-  if (checkEmployeeId(employeeId.value)) {
-    // IDが有効ならイベントを発火
-    emit('validEmployeeId');
-  }
-};
-
-</script> -->
