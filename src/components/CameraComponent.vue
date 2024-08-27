@@ -1,14 +1,14 @@
 <template>
   <div>
-    <v-btn :disabled="photoStore.numberOfPictures <= 0" color="primary" @click="takePhoto">
-      Take Photo
-    </v-btn>
-    <p :style="{ color: photoStore.numberOfPictures > 0 ? 'red' : 'black' }">
-      {{ 4 - photoStore.numberOfPictures }} / {{ photoStore.maxNumberOfPictures }}
-    </p>
     <div class="d-flex flex-column align-center mb-5">
       <video ref="video" width="80%" autoplay></video>
       <canvas ref="canvas" style="display: none;"></canvas>
+      <v-btn :disabled="photoStore.numberOfPictures >= 10" color="primary" @click="takePhoto" class="circular-btn">
+        <svg-icon type="mdi" :path="pathCamera"></svg-icon>
+      </v-btn>
+      <p>
+        {{ photoStore.numberOfPictures }}
+      </p>
     </div>
     <div id="photo-container">
       <v-row>
@@ -20,7 +20,7 @@
             </v-card-text>
             <v-card-actions>
               <v-btn color="red" variant="outlined" @click="removePhoto(photoStore.photos.length - 1 - index)">
-                <svg-icon type="mdi" :path="path" />Remove</v-btn>
+                <svg-icon type="mdi" :path="pathDelete" />Remove</v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { getTimeStamp } from '../utils/helper';
@@ -38,13 +38,13 @@ import { getTimeStamp } from '../utils/helper';
 import ImageCard from './ImageCard.vue';
 
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiDelete } from '@mdi/js';
+import { mdiCamera, mdiDelete } from '@mdi/js';
 
 let mediaStream = null;
 
 
-
-const path = ref(mdiDelete);
+const pathCamera = ref(mdiCamera);
+const pathDelete = ref(mdiDelete);
 
 
 
@@ -81,7 +81,7 @@ const deactivateCamera = () => {
 }
 
 const takePhoto = () => {
-  if (photoStore.numberOfPictures > 0) {
+  if (photoStore.numberOfPictures <= 10) {
     const context = canvas.value.getContext('2d');
     canvas.value.width = video.value.videoWidth;
     canvas.value.height = video.value.videoHeight;
@@ -89,6 +89,14 @@ const takePhoto = () => {
 
     const data = canvas.value.toDataURL('image/png');
     const photoName = `${idStore.palletId}_${getTimeStamp()}`;
+
+    // console.log("Base64 String Length:", data.length);
+    // Base64データのサイズ（バイト単位）
+    // const base64Length = data.length - 'data:image/png;base64,'.length;
+    // const padding = (data.charAt(data.length - 2) === '=') ? 2 : (data.charAt(data.length - 1) === '=') ? 1 : 0;
+    // const byteSize = (base64Length * 3 / 4) - padding;
+    // console.log("Data Size in Bytes:", byteSize);
+
 
     photoStore.addPhoto({ data, name: photoName });
   }
@@ -99,15 +107,19 @@ const removePhoto = (index) => {
   photoStore.removePhoto(index);
 };
 
-// watch(() => idStore.showCamera, (newVal) => {
-//   if (newVal) {
-//     activateCamera();
-//   } 
+watch(() => idStore.showCamera, (newVal) => {
+  if (newVal) {
+    activateCamera();
+  } else {
+    deactivateCamera();
+  }
+
+});
+
+// onMounted(() => {
+//   activateCamera();
 // });
 
-onMounted(() => {
-  activateCamera();
-});
 
 // onUnmounted(() => {
 //   deactivateCamera();
@@ -118,5 +130,17 @@ onMounted(() => {
 .custom-border {
   border: 0.1px solid #000;
   /* 黒いボーダー */
+}
+
+.circular-btn {
+  width: 30px;
+  /* Adjust the size as needed */
+  height: 60px;
+  /* Make height equal to width */
+  border-radius: 50%;
+  /* Make the button circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>

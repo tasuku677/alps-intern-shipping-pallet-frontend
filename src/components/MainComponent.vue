@@ -20,7 +20,7 @@
       <!-- <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
         <v-btn color="success" @click="submitPicture">Submit</v-btn>
       </v-col> -->
-      <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
+      <v-col cols="3" v-show="photoStore.numberOfPictures > 0">
         <SubmitButton/>
       </v-col>
     </v-row>
@@ -41,5 +41,4 @@ const idStore = useIdStore();
 </script>
 
 <style scoped>
-/* 必要に応じてスタイルを追加 */
 </style>
