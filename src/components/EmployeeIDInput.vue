@@ -1,6 +1,6 @@
 <template>
-  <v-text-field v-model="idStore.employeeId" label="Employee ID" ref="employeeIdInput" autofocus
-    @input="handleEmployeeIdInput"></v-text-field>
+  <v-text-field v-model="idStore.employeeId" label="Employee ID" ref="employeeField" autofocus
+    @input="handleEmployeeField"></v-text-field>
 </template>
 
 <script setup>
@@ -10,18 +10,18 @@ import { checkEmployeeId } from '../utils/helper';
 
 const idStore = useIdStore();
 const preEmployeeId = ref('');
-const employeeIdInput = ref('');
+const employeeField = ref('');
 
-const handleEmployeeIdInput = () => {
+const handleEmployeeField = () => {
   idStore.employeeId = idStore.employeeId.slice(preEmployeeId.value.length);
   preEmployeeId.value = idStore.employeeId;
   if (checkEmployeeId(idStore.employeeId)) {
-    employeeIdInput.value.$el.style.color = '#1976D2';
+    employeeField.value.$el.style.color = '#1976D2';
     idStore.setShowPalletIdInput(true);
-    employeeIdInput.value.blur()
+    employeeField.value.blur();
   }
   else {
-    employeeIdInput.value.$el.style.color = 'red';
+    employeeField.value.$el.style.color = 'red';
   }
 };
 </script>

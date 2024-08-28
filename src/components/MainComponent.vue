@@ -16,18 +16,15 @@
         <CameraComponent ref="cameraRef"/>
       </v-col>
 
-      <!-- Submit Button -->
-      <!-- <v-col cols="3" v-show="photoStore.numberOfPictures === 0">
-        <v-btn color="success" @click="submitPicture">Submit</v-btn>
-      </v-col> -->
-      <v-col cols="3" v-show="photoStore.numberOfPictures > 0">
-        <SubmitButton/>
+      <v-col cols="3" v-show="photoStore.photos.length > 0">
+        <SubmitButton @reset="resetComponents"/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
+import {ref, nextTick} from 'vue';
 import { usePhotoStore } from '../stores/photoStore';
 import { useIdStore } from '../stores/idStore';
 import EmployeeIDInput from './EmployeeIDInput';
@@ -37,6 +34,17 @@ import SubmitButton from './SubmitButton';
 
 const photoStore = usePhotoStore();
 const idStore = useIdStore();
+const palletIdInput = ref(null);
+
+
+const resetComponents = async () => {
+  idStore.reset();
+  photoStore.reset();
+  palletIdInput.value.focusPalletIdInput();
+
+  console.log('palletIdInput.value', palletIdInput.value);  // ここで ref の状態を確認
+}
+
 
 </script>
 

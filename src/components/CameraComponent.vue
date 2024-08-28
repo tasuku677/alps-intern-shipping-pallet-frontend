@@ -3,18 +3,19 @@
     <div class="d-flex flex-column align-center mb-5">
       <video ref="video" width="80%" autoplay></video>
       <canvas ref="canvas" style="display: none;"></canvas>
-      <v-btn :disabled="photoStore.numberOfPictures >= 10" color="primary" @click="takePhoto" class="circular-btn">
+      <v-btn :disabled="photoStore.photos.length >= 10" color="primary" @click="takePhoto" class="circular-btn">
         <svg-icon type="mdi" :path="pathCamera"></svg-icon>
       </v-btn>
       <p>
-        {{ photoStore.numberOfPictures }}
+        {{ photoStore.photos.length }}
       </p>
     </div>
     <div id="photo-container">
       <v-row>
         <v-col v-for="(photo, index) in photoStore.photos.slice().reverse()" :key="index" cols="12" md="4">
           <v-card class="custom-border mb-5 d-flex flex-column align-center pt-5">
-            <v-img :src="photo.data" width="80%"></v-img>
+            <!-- <v-img :src="photo.data" width="80%"></v-img> -->
+            <v-img :src="getBlobUrl(photo.data)" width="80%"></v-img>
             <v-card-text>
               <p style="color: red">{{ photo.name }}</p>
             </v-card-text>
@@ -81,26 +82,32 @@ const deactivateCamera = () => {
 }
 
 const takePhoto = () => {
-  if (photoStore.numberOfPictures <= 10) {
+  if (photoStore.photos.length <= 10) {
     const context = canvas.value.getContext('2d');
     canvas.value.width = video.value.videoWidth;
     canvas.value.height = video.value.videoHeight;
     context.drawImage(video.value, 0, 0, canvas.value.width, canvas.value.height);
 
-    const data = canvas.value.toDataURL('image/png');
-    const photoName = `${idStore.palletId}_${getTimeStamp()}`;
-
-    // console.log("Base64 String Length:", data.length);
-    // Base64データのサイズ（バイト単位）
-    // const base64Length = data.length - 'data:image/png;base64,'.length;
-    // const padding = (data.charAt(data.length - 2) === '=') ? 2 : (data.charAt(data.length - 1) === '=') ? 1 : 0;
-    // const byteSize = (base64Length * 3 / 4) - padding;
-    // console.log("Data Size in Bytes:", byteSize);
-
-
-    photoStore.addPhoto({ data, name: photoName });
+    // toDataURL version
+    // const data = canvas.value.toDataURL('image/png');
+    // const photoName = `${idStore.palletId}_${getTimeStamp()}`;
+    // console.log('Base64', data);
+    // photoStore.addPhoto({ data, name: photoName });
+    
+    //blob version
+    canvas.value.toBlob(async (blob) => {
+      if (blob) {
+        const photoName = `${idStore.palletId}_${getTimeStamp()}`;
+        // BlobをphotoStoreに追加
+        photoStore.addPhoto({ data: blob, name: photoName });
+        console.log('blob', blob);
+      }
+    }, 'image/png');
   }
 };
+function getBlobUrl(blob) {
+  return URL.createObjectURL(blob);
+}
 
 const removePhoto = (index) => {
   // alert(index);
@@ -113,17 +120,9 @@ watch(() => idStore.showCamera, (newVal) => {
   } else {
     deactivateCamera();
   }
-
 });
 
-// onMounted(() => {
-//   activateCamera();
-// });
 
-
-// onUnmounted(() => {
-//   deactivateCamera();
-// });
 </script>
 
 <style scoped>

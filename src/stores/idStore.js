@@ -4,6 +4,7 @@ export const useIdStore = defineStore('idStore', {
     state: () => ({
         employeeId: '',
         palletId: '',
+        prePalletId: '',
         showPalletIdInput: false,
         showCamera: false,
     }),
@@ -14,5 +15,12 @@ export const useIdStore = defineStore('idStore', {
         setShowCamera(value) {
             this.showCamera = value;
         },
+        reset() {
+            // this.employeeId = this.employeeId;
+            this.palletId = '';
+            this.prePalletId = '';
+            this.showPalletIdInput = true;
+            this.showCamera = false;
+        }
     },
 });

@@ -1,4 +1,4 @@
-async function sendImages(imageData){
+async function sendImages(imageData, employeeId, palletId){
     const response = await fetch('https://example.com/api/images', {
         method: 'POST',
         headers: {
