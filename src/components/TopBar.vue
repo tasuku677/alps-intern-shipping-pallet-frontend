@@ -8,8 +8,8 @@
                 <!-- <v-spacer></v-spacer> -->
                 <!-- <v-col cols="0"></v-col> -->
                 <v-col cols="6">
-                    <v-chip v-if="photoStore.storedPhotosCount" color="secondary" class="mr-4 pl-1" label>
-                        <v-icon>mdi-camera</v-icon>
+                    <v-chip v-if="photoStore.storedPhotosCount" color='#FF5252' class="mr-4" label>
+                        <v-icon>mdi-exclamation</v-icon>
                         <span class="chip-text">{{ photoStore.storedPhotosCount }} photo{{ photoStore.storedPhotosCount > 1 ? 's' : '' }} need to be sent.</span>
                     </v-chip>
                     <v-chip v-else color="success" class="mr-4" label>
