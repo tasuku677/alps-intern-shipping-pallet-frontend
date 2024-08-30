@@ -1,16 +1,30 @@
 <template>
-  <v-text-field v-model="idStore.employeeId" label="Employee ID" ref="employeeField" autofocus
-    @input="handleEmployeeField"></v-text-field>
+  <v-text-field 
+  v-model="idStore.employeeId" 
+  ref="employeeField" 
+  autofocus
+  @input="handleEmployeeField">
+    <template v-slot:label>
+      <svg-icon class="icon" type="mdi" :path="pathAccount" /> Employee ID
+    </template>
+    </v-text-field>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiAccount } from '@mdi/js';
+
 import { useIdStore } from '../stores/idStore';
 import { checkEmployeeId } from '../utils/helper';
+
 
 const idStore = useIdStore();
 const preEmployeeId = ref('');
 const employeeField = ref('');
+
+const pathAccount = ref(mdiAccount);
 
 const handleEmployeeField = () => {
   idStore.employeeId = idStore.employeeId.slice(preEmployeeId.value.length);
@@ -26,5 +40,10 @@ const handleEmployeeField = () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.icon {
+  vertical-align: sub;
+  font-size: 1.5em; /* Adjust the size as needed */
+}
+</style>
 

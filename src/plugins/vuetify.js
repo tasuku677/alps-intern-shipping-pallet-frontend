@@ -16,4 +16,8 @@ export default createVuetify({
   theme: {
     defaultTheme: 'dark',
   },
+  icons: {
+    iconfont: 'mdi', // 'mdi' or 'fa' for Font Awesome
+  },
+
 })

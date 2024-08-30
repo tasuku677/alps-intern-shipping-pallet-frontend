@@ -1,15 +1,23 @@
 <template>
   <v-text-field v-model="idStore.palletId" label="Pallet ID" ref="palletIdInput" @input="handlePalletIdInput"
-    autofocus></v-text-field>
+    autofocus>
+    <template v-slot:label>
+      <svg-icon class="icon" type="mdi" :path="pathPallet" /> Pallet ID
+    </template></v-text-field>
 </template>
 
 <script setup>
-import { ref, defineExpose } from 'vue';
+import { ref } from 'vue';
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiShippingPallet } from '@mdi/js';
+
 import { useIdStore } from '../stores/idStore';
 import { checkPalletId } from '../utils/helper';
 
 const idStore = useIdStore();
 const palletIdInput = ref(null);
+
+const pathPallet = ref(mdiShippingPallet);
 
 const handlePalletIdInput = () => {
   idStore.palletId = idStore.palletId.slice(idStore.prePalletId.length);
@@ -33,5 +41,8 @@ defineExpose({ focusPalletIdInput });
 </script>
 
 <style scoped>
-/* 必要に応じてスタイルを追加 */
+.icon {
+  vertical-align: sub;
+  font-size: 1.5em; /* Adjust the size as needed */
+}
 </style>

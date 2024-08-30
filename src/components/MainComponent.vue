@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      
+      <TopBar/>
+
       <!-- Employee ID Input -->
       <v-col cols="12">
         <EmployeeIDInput ref="employeeIdInput" />
@@ -29,6 +32,7 @@ import { ref, onMounted } from 'vue';
 import { usePhotoStore } from '../stores/photoStore';
 import { useIdStore } from '../stores/idStore';
 
+import TopBar from './TopBar';
 import EmployeeIDInput from './EmployeeIDInput';
 import PalletIDInput from './PalletIDInput';
 import CameraComponent from './CameraComponent';
@@ -46,28 +50,26 @@ const resetComponents = async () => {
   photoStore.reset();
   palletIdInput.value.focusPalletIdInput();
 
-  console.log('palletIdInput.value', palletIdInput.value);  // ここで ref の状態を確認
+  // console.log('palletIdInput.value', palletIdInput.value); 
 }
 
 const sendImageBackground = async () => {
   let db = await initializeDB();
   console.log('db in main', db);
-  getAllData(db);
+  // getAllData(db);
 
   // for (const photo of photoStore.photos) {
   //   await updateData(db, { data: photo.data, name: photo.name }); //x: updateData(db, photo); this cause an error because the `photo` object is runtime JavaScript object, which is not accepted by IndexedDB. 
   //   // console.log('add data', photo.data.length);
   //   // alert('add data');
   // }
-  alert('Data has been successfully submitted');
+  // alert('Data has been successfully submitted');
 };
 
-onMounted(() => {
-  window.addEventListener('online', sendImageBackground);
-});
-onMounted(() => {
-  window.addEventListener('offline', ()=> console.log('Hello') );
-});
+// onMounted(() => {
+//   window.addEventListener('online', sendImageBackground);
+//   window.addEventListener('offline', ()=> console.log('Hello') );
+// });
 </script>
 
 <style scoped></style>

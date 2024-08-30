@@ -1,5 +1,5 @@
-let db = null;
 
+let db = null;
 const initializeDB = () => {
     if (db) {
         return Promise.resolve(db);
@@ -28,100 +28,122 @@ const initializeDB = () => {
         };
     });
 };
-// const addData = (db, photo) => {
-//     const transaction = db.transaction(['MyObjectStore'], 'readwrite');
-//     const objectStore = transaction.objectStore('MyObjectStore');
-//     const request = objectStore.add(photo);
-//     request.onsuccess = function () {
-//         console.log('The data has been written successfully\n');
-//     };
-//     request.onerror = function (event) {
-//         console.error('Error adding data:\n', event.target.errorCode);
-//     };
-// };
+const addData = (db, photo) => {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore'], 'readwrite');
+        const objectStore = transaction.objectStore('MyObjectStore');
+        const request = objectStore.add(photo);
+        request.onsuccess = function () {
+            resolve(true);
+        };
+        request.onerror = function (event) {
+            reject('Error adding data:\n', event.target.errorCode);
+        };
+    });
+};
 
 const getData = (db, imageName) => {
-    const transaction = db.transaction(['MyObjectStore']);
-    const objectStore = transaction.objectStore('MyObjectStore');
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore']);
+        const objectStore = transaction.objectStore('MyObjectStore');
 
-    const request = objectStore.get(imageName);
+        const request = objectStore.get(imageName);
 
-    request.onsuccess = function (event) {
-        console.log(`Data has been retrieved.\n:${event.target.result.name}`);
-    };
+        request.onsuccess = function (event) {
+            resolve(event.target.result);
+            console.log(`Data has been retrieved.\n:${event.target.result.name}`);
+        };
 
-    request.onerror = function (event) {
-        console.log(`Failed to retrieve data.\n:${event}`);
-    };
+        request.onerror = function (event) {
+            reject(`Failed to retrieve data.\n:${event}`);
+        };
+    });
 };
 const getAllData = (db) => {
-    const transaction = db.transaction(['MyObjectStore']);
-    const objectStore = transaction.objectStore('MyObjectStore');
-    const request = objectStore.cursor();
-    request.onsuccess = function (event) {
-        if (cursor) {
-            console.log(`Name for SSN ${cursor.key} is ${cursor.value.name}`);
-            cursor.continue();
-        } else {
-            console.log("No more entries!");
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore']);
+        const objectStore = transaction.objectStore('MyObjectStore');
+        const request = objectStore.getAll();
+        request.onsuccess = function (event) {
+            resolve(event.target.result);
         }
-    }
+        request.onerror = function (event) {
+            reject(`Failed to retrieve data.\n:${event}`);
+        }
+    });
 }
+const countData = (db, imageName = undefined) => {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore']);
+        const objectStore = transaction.objectStore('MyObjectStore');
+        const request = objectStore.count(imageName);
+        request.onsuccess = function () {
+            resolve(request.result);
+        }
+        request.onerror = function (event) {
+            reject(`Failed to count data.\n:${event}`);
+        }
+    });
+}
+
 const updateData = (db, newData) => {
-    const transaction = db.transaction(['MyObjectStore'], 'readwrite');
-    const objectStore = transaction.objectStore('MyObjectStore');
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore'], 'readwrite');
+        const objectStore = transaction.objectStore('MyObjectStore');
+        const request = objectStore.put(newData);
 
-    const clonedData = JSON.parse(JSON.stringify(newData));
+        request.onsuccess = function () {
+            resolve(true);
+        };
 
-
-    const request = objectStore.put(newData);
-
-    request.onsuccess = function () {
-        console.log("Data has been successfully updated.\n");
-    };
-
-    request.onerror = function (event) {
-        console.error("Failed to update data.\n", event);
-    };
+        request.onerror = function (event) {
+            reject(false);
+        };
+    });
 }
 const deleteData = (db, imageName) => {
-    const transaction = db.transaction(['MyObjectStore'], 'readwrite');
-    const objectStore = transaction.objectStore('MyObjectStore');
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore'], 'readwrite');
+        const objectStore = transaction.objectStore('MyObjectStore');
 
-    const request = objectStore.delete(imageName);
+        const request = objectStore.delete(imageName);
 
-    request.onsuccess = function () {
-        console.log(`${imageName} has been deleted.\n`);
-    };
+        request.onsuccess = function () {
+            resolve(true);
+        };
 
-    request.onerror = function (event) {
-        console.error("Failed to delete data.\n", event);
-    };
+        request.onerror = function (event) {
+            reject(false);
+        };
+    });
 }
 const deleteDataAll = (db) => {
-    const transaction = db.transaction(['MyObjectStore'], 'readwrite');
-    const objectStore = transaction.objectStore('MyObjectStore');
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore'], 'readwrite');
+        const objectStore = transaction.objectStore('MyObjectStore');
 
-    const request = objectStore.clear();
+        const request = objectStore.clear();
 
-    request.onsuccess = function () {
-        console.log("All data has been deleted.\n");
-    };
+        request.onsuccess = function () {
+            resolve(true);
+        };
 
-    request.onerror = function (event) {
-        console.error("Failed to delete all data.\n", event);
-    };
+        request.onerror = function (event) {
+            reject(false);
+        };
+    });
 }
 
 const deleteDatabase = () => {
-    const request = window.indexedDB.deleteDatabase("MyTestDatabase");
-    request.onsuccess = function () {
-        console.log("Database deleted successfully\n");
-    };
-    request.onerror = function (event) {
-        console.error("Failed to delete database:\n", event);
-    };
+    return new Promise((resolve, reject) => {
+        const request = window.indexedDB.deleteDatabase("MyTestDatabase");
+        request.onsuccess = function () {
+            resolve(true);
+        };
+        request.onerror = function (event) {
+            reject(false);
+        };
+    });
 };
 
-// export{initializeDB, addData, getData, updateData, deleteData, deleteDataAll, deleteDatabase};
-export { initializeDB, getData, getAllData, updateData, deleteData, deleteDataAll, deleteDatabase };
+export { initializeDB, addData, getData, getAllData, countData, updateData, deleteData, deleteDataAll, deleteDatabase };
