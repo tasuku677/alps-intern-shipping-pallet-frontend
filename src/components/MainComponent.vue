@@ -70,6 +70,15 @@ const sendImageBackground = async () => {
 //   window.addEventListener('online', sendImageBackground);
 //   window.addEventListener('offline', ()=> console.log('Hello') );
 // });
+
+// onMounted(() => {
+//     window.addEventListener('beforeunload', deleteDatabase);
+// });
+
+// onUnmounted(() => {
+//     window.removeEventListener('beforeunload', deleteDatabase);
+// });
+
 </script>
 
 <style scoped></style>

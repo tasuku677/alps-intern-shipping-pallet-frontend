@@ -30,13 +30,4 @@ const submitPicture = async () => {
     emit('reset');
 };
 
-
-// onMounted(() => {
-//     window.addEventListener('beforeunload', deleteDatabase);
-// });
-
-// onUnmounted(() => {
-//     window.removeEventListener('beforeunload', deleteDatabase);
-// });
-
 </script>
