@@ -54,17 +54,21 @@ const resetComponents = async () => {
 }
 
 const sendImageBackground = async () => {
-  let db = await initializeDB();
+  
+let db = await initializeDB();
   console.log('db in main', db);
-  // getAllData(db);
-
-  // for (const photo of photoStore.photos) {
-  //   await updateData(db, { data: photo.data, name: photo.name }); //x: updateData(db, photo); this cause an error because the `photo` object is runtime JavaScript object, which is not accepted by IndexedDB. 
-  //   // console.log('add data', photo.data.length);
-  //   // alert('add data');
-  // }
+  const allPhotos = await getAllData(db);
+  // console.log('allPhotos', allPhotos);
+  for(let photo of allPhotos) {
+    console.log('photo', photo);
+  }
   // alert('Data has been successfully submitted');
 };
+
+onMounted(() => {
+  sendImageBackground();
+  setInterval(sendImageBackground, 200000);
+});
 
 // onMounted(() => {
 //   window.addEventListener('online', sendImageBackground);

@@ -18,7 +18,7 @@ const submitPicture = async () => {
     // await deleteDataAll(db);
     for (const photo of photoStore.photos) {
         try{
-        const isDone = await addData(db, { data: photo.data, name: photo.name });//x: updateData(db, photo); this cause an error because the `photo` object is runtime JavaScript object, which is not accepted by IndexedDB.
+        const isDone = await addData(db, { data: photo.data, name: photo.name, palletId: idStore.palletId });//x: updateData(db, photo); this cause an error because the `photo` object is runtime JavaScript object, which is not accepted by IndexedDB.
         if(isDone === true) photoStore.storedPhotosCount += 1;
         }
         catch(e){
