@@ -8,13 +8,13 @@
                 <!-- <v-spacer></v-spacer> -->
                 <!-- <v-col cols="0"></v-col> -->
                 <v-col cols="6">
-                    <v-chip v-if="photoStore.storedPhotosCount" color='#FF5252' class="mr-4" label>
+                    <v-chip v-if="photoStore.numberOfUnsentPallet" color='#FF5252' class="mr-4" label>
                         <v-icon>mdi-exclamation</v-icon>
-                        <span class="chip-text">{{ photoStore.storedPhotosCount }} photo{{ photoStore.storedPhotosCount > 1 ? 's' : '' }} need to be sent.</span>
+                        <span class="chip-text">{{ photoStore.numberOfUnsentPallet }} pallet{{ photoStore.numberOfUnsentPallet > 1 ? 's' : '' }} need to be sent.</span>
                     </v-chip>
                     <v-chip v-else color="success" class="mr-4" label>
                         <v-icon>mdi-check-circle</v-icon>
-                        <span class="chip-text">All photos have been sent.</span>
+                        <span class="chip-text">All pallets have been sent.</span>
                     </v-chip>
                 </v-col>
             </v-row>
@@ -34,7 +34,7 @@ const photoStore = usePhotoStore();
 
 onMounted(async () => {
     let db = await initializeDB();
-    photoStore.storedPhotosCount = await countData(db);
+    photoStore.numberOfUnsentPallet = await countData(db);
 });
 
 </script>

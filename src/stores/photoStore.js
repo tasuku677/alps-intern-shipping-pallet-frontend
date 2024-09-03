@@ -4,7 +4,7 @@ import { defineStore } from 'pinia';
 export const usePhotoStore = defineStore('photoStore', {
   state: () => ({
     photos: [],
-    storedPhotosCount: 0,
+    numberOfUnsentPallet: 0,
   }),
   actions: {
     addPhoto(photoData) {

@@ -19,7 +19,7 @@ const initializeDB = () => {
         request.onupgradeneeded = function (event) {
             const db = event.target.result;
             if (!db.objectStoreNames.contains('MyObjectStore')) {
-                db.createObjectStore('MyObjectStore', { keyPath: 'name' });
+                db.createObjectStore('MyObjectStore', { keyPath: 'palletId' });
                 console.log('Create object store\n');
             }
             else {
@@ -138,6 +138,7 @@ const deleteDatabase = () => {
     return new Promise((resolve, reject) => {
         const request = window.indexedDB.deleteDatabase("MyTestDatabase");
         request.onsuccess = function () {
+            console.log('Database deleted successfully');
             resolve(true);
         };
         request.onerror = function (event) {

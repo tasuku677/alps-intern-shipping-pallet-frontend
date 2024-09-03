@@ -36,8 +36,6 @@ import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { getTimeStamp } from '../utils/helper';
 
-import ImageCard from './ImageCard.vue';
-
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCamera, mdiDelete } from '@mdi/js';
 
@@ -93,14 +91,15 @@ const takePhoto = () => {
     // const photoName = `${idStore.palletId}_${getTimeStamp()}`;
     // console.log('Base64', data);
     // photoStore.addPhoto({ data, name: photoName });
-    
+
     //blob version
     canvas.value.toBlob(async (blob) => {
       if (blob) {
         const photoName = `${idStore.palletId}_${getTimeStamp()}`;
-        // BlobをphotoStoreに追加
-        photoStore.addPhoto({ data: blob, name: photoName });
-        console.log('blob', blob);
+        if (photoStore.photos.length === 0 || photoStore.photos[photoStore.photos.length - 1].name !== photoName) {
+          photoStore.addPhoto({ data: blob, name: photoName });
+          console.log('blob', blob);
+        }
       }
     }, 'image/png');
   }

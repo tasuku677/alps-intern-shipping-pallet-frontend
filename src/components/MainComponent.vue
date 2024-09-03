@@ -1,8 +1,8 @@
 <template>
   <v-container>
     <v-row>
-      
-      <TopBar/>
+
+      <TopBar />
 
       <!-- Employee ID Input -->
       <v-col cols="12">
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 import { usePhotoStore } from '../stores/photoStore';
 import { useIdStore } from '../stores/idStore';
@@ -43,7 +43,7 @@ import { initializeDB, updateData, getData, getAllData, deleteDataAll, deleteDat
 const photoStore = usePhotoStore();
 const idStore = useIdStore();
 const palletIdInput = ref(null);
-
+let db = null;
 
 const resetComponents = async () => {
   idStore.reset();
@@ -54,29 +54,24 @@ const resetComponents = async () => {
 }
 
 const sendImageBackground = async () => {
-  
-let db = await initializeDB();
+  if(db === null) db = await initializeDB();
   console.log('db in main', db);
   const allPhotos = await getAllData(db);
   // console.log('allPhotos', allPhotos);
-  for(let photo of allPhotos) {
+  for (let photo of allPhotos) {
     console.log('photo', photo);
   }
   // alert('Data has been successfully submitted');
 };
 
-onMounted(() => {
+onMounted(async() => {
   sendImageBackground();
   setInterval(sendImageBackground, 200000);
 });
 
 // onMounted(() => {
-//   window.addEventListener('online', sendImageBackground);
-//   window.addEventListener('offline', ()=> console.log('Hello') );
-// });
-
-// onMounted(() => {
 //     window.addEventListener('beforeunload', deleteDatabase);
+  
 // });
 
 // onUnmounted(() => {
