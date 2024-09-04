@@ -61,12 +61,9 @@ if(photoStore.numberOfUnsentPallet === 0) return;
   const unsentPallet = await getDataByIndex(db, 0); 
   console.log('unsentPallet', unsentPallet);  // alert('Data has been successfully submitted');
   const response = await sendImages(unsentPallet.currentSessionPhotos, unsentPallet.employeeId, unsentPallet.palletId);
-  console.log('response', response);
-  console.log(response.status);
   if(response.status === 200) {
     const isDone =  await deleteData(db, unsentPallet.palletId);
     if(isDone) photoStore.numberOfUnsentPallet -= 1;
-    
   }
   else {
     alert('Error in sending images');
@@ -75,7 +72,7 @@ if(photoStore.numberOfUnsentPallet === 0) return;
 
 onMounted(async() => {
   // sendImageBackground();
-  setInterval(sendImageBackground, 20000);
+  setInterval(sendImageBackground, 20000000);
 });
 
 // onMounted(() => {

@@ -2,20 +2,17 @@
     <v-app-bar>
         <v-container>
             <v-row>
-                <v-col cols="6">
+                <v-col cols="10">
                     <v-toolbar-title>Barcode Scanner</v-toolbar-title>
                 </v-col>
                 <!-- <v-spacer></v-spacer> -->
                 <!-- <v-col cols="0"></v-col> -->
-                <v-col cols="6">
-                    <v-chip v-if="photoStore.numberOfUnsentPallet" color='#FF5252' class="mr-4" label>
+                <v-col cols="2">
+                    <v-chip v-if="photoStore.numberOfUnsentPallet" color="error" class="d-flex align-center justify-end">
                         <v-icon>mdi-exclamation</v-icon>
-                        <span class="chip-text">{{ photoStore.numberOfUnsentPallet }} pallet{{ photoStore.numberOfUnsentPallet > 1 ? 's' : '' }} need to be sent.</span>
+                        {{ photoStore.numberOfUnsentPallet }}
                     </v-chip>
-                    <v-chip v-else color="success" class="mr-4" label>
-                        <v-icon>mdi-check-circle</v-icon>
-                        <span class="chip-text">All pallets have been sent.</span>
-                    </v-chip>
+                    <v-icon v-else color="success">mdi-check-circle</v-icon>
                 </v-col>
             </v-row>
         </v-container>
@@ -41,14 +38,10 @@ onMounted(async () => {
 
 <style scoped>
 .chip-text {
-  white-space: nowrap;
-  font-size: 0.8em;
-  /* overflow: visible;
+    white-space: nowrap;
+    font-size: 0.8em;
+    /* overflow: visible;
   display: inline-block; */
-  /* max-width: 100%; */
+    /* max-width: 100%; */
 }
 </style>
-
-
-
-
