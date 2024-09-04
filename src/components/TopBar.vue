@@ -1,5 +1,5 @@
 \<template>
-    <v-app-bar>
+    <v-app-bar style="background-color: lightyellow;">
         <v-container>
             <v-row>
                 <v-col cols="10">

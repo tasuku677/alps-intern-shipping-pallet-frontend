@@ -66,7 +66,7 @@ if(photoStore.numberOfUnsentPallet === 0) return;
     if(isDone) photoStore.numberOfUnsentPallet -= 1;
   }
   else {
-    alert('Error in sending images');
+    console.log('Error in sending images');
   }
 };
 
