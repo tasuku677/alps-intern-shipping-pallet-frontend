@@ -28,7 +28,7 @@ import { ref, onMounted } from 'vue';
 // import { mdi } from '@mdi/js';
 
 import { usePhotoStore } from '../stores/photoStore';
-import { initializeDB, getData, getAllData, countData, updateData, deleteData, deleteDataAll, deleteDatabase } from '../utils/operateDB';
+import { initializeDB, getAllData, countData, updateData, deleteData, deleteDataAll, deleteDatabase } from '../utils/operateDB';
 
 const photoStore = usePhotoStore();
 

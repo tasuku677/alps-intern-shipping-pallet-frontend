@@ -1,16 +1,16 @@
-async function sendImages(imageData, employeeId, palletId) {
+async function sendImages(photoBlobArray, employeeId, palletId) {
+    const formData = new FormData();
+    photoBlobArray.forEach((photo, index) => {
+        formData.append('blobArray', photo.data, photo.name);  
+    });
+    formData.append('employeeId', employeeId);
+    formData.append('palletId', palletId);
+
     const response = await fetch('http://127.0.0.1:8000/photos', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            imageData: imageData,
-            employeeId: employeeId,
-            palletId: palletId
-        })
+        body: formData,
     });
-    return await response.json();
+    return response;
 }
 // (async () => {
 //     const response = await sendImages('wogiweimopwopomciewpmcei', '1', '1');

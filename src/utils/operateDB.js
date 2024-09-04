@@ -42,12 +42,12 @@ const addData = (db, photo) => {
     });
 };
 
-const getData = (db, imageName) => {
+const getDataByKey = (db, keyName) => {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(['MyObjectStore']);
         const objectStore = transaction.objectStore('MyObjectStore');
 
-        const request = objectStore.get(imageName);
+        const request = objectStore.get(keyName);
 
         request.onsuccess = function (event) {
             resolve(event.target.result);
@@ -57,6 +57,30 @@ const getData = (db, imageName) => {
         request.onerror = function (event) {
             reject(`Failed to retrieve data.\n:${event}`);
         };
+    });
+};
+const getDataByIndex = (db, indexNumber) => {
+    return new Promise((resolve, reject) => {
+        const transaction = db.transaction(['MyObjectStore']);
+        const objectStore = transaction.objectStore('MyObjectStore');
+        const request = objectStore.openCursor();
+        request.onsuccess = function (event) {
+            const cursor = event.target.result;
+            if (cursor) {
+                if (indexNumber) {
+                    cursor.continue();
+                    indexNumber--;
+                } else {
+                    resolve(cursor.value);
+                }
+            }
+            else {
+                resolve(null);
+            }
+        }
+        request.onerror = function (event) {
+            reject(`Failed to retrieve data.\n:${event}`);
+        }
     });
 };
 const getAllData = (db) => {
@@ -101,12 +125,12 @@ const updateData = (db, newData) => {
         };
     });
 }
-const deleteData = (db, imageName) => {
+const deleteData = (db, keyName) => {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(['MyObjectStore'], 'readwrite');
         const objectStore = transaction.objectStore('MyObjectStore');
 
-        const request = objectStore.delete(imageName);
+        const request = objectStore.delete(keyName);
 
         request.onsuccess = function () {
             resolve(true);
@@ -147,4 +171,4 @@ const deleteDatabase = () => {
     });
 };
 
-export { initializeDB, addData, getData, getAllData, countData, updateData, deleteData, deleteDataAll, deleteDatabase };
+export { initializeDB, addData, getDataByIndex, getAllData, countData, updateData, deleteData, deleteDataAll, deleteDatabase };
