@@ -40,8 +40,5 @@ onMounted(async () => {
 .chip-text {
     white-space: nowrap;
     font-size: 0.8em;
-    /* overflow: visible;
-  display: inline-block; */
-    /* max-width: 100%; */
 }
 </style>

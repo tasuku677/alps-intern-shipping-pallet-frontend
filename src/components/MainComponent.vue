@@ -55,24 +55,33 @@ const resetComponents = async () => {
 }
 
 const sendImageBackground = async () => {
-if(photoStore.numberOfUnsentPallet === 0) return;
-  const db = await initializeDB();
-  console.log('db in main', db);
-  const unsentPallet = await getDataByIndex(db, 0); 
-  console.log('unsentPallet', unsentPallet);  // alert('Data has been successfully submitted');
-  const response = await sendImages(unsentPallet.currentSessionPhotos, unsentPallet.employeeId, unsentPallet.palletId);
-  if(response.status === 200) {
-    const isDone =  await deleteData(db, unsentPallet.palletId);
-    if(isDone) photoStore.numberOfUnsentPallet -= 1;
-  }
+  if(photoStore.numberOfUnsentPallet === 0) return;
   else {
-    console.log('Error in sending images');
+    const db = await initializeDB();
+    console.log('db in main', db);
+    const unsentPallet = await getDataByIndex(db, 0); 
+    console.log('unsentPallet', unsentPallet);  // alert('Data has been successfully submitted');
+    const response = await sendImages(unsentPallet.currentSessionPhotos, unsentPallet.employeeId, unsentPallet.palletId);
+    // alert('response', response)
+    if(response.status === 200) {
+      const isDone =  await deleteData(db, unsentPallet.palletId);
+      if(isDone) photoStore.numberOfUnsentPallet -= 1;
+    }
+    else {
+      console.log('Error in sending images');
+    }
+    
   }
 };
 
+let intervalId;
 onMounted(async() => {
-  // sendImageBackground();
-  setInterval(sendImageBackground, 20000000);
+  
+  await sendImageBackground();
+  intervalId = setInterval(sendImageBackground, 5000);
+});
+onUnmounted(() => {
+  clearInterval(intervalId);
 });
 
 // onMounted(() => {

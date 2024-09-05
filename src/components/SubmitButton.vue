@@ -18,6 +18,7 @@ const submitPicture = async () => {
     // await deleteDataAll(db);
 
     const temp = {
+        employeeId: idStore.employeeId,
         palletId: idStore.palletId,
         currentSessionPhotos: photoStore.photos.map(photo => ({
             name: photo.name,
