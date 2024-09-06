@@ -65,7 +65,7 @@ const sendImageBackground = async () => {
     // alert('response', response)
     if(response.status === 200) {
       const isDone =  await deleteData(db, unsentPallet.palletId);
-      if(isDone) photoStore.numberOfUnsentPallet -= 1;
+      if(isDone === true) photoStore.numberOfUnsentPallet -= 1;
     }
     else {
       console.log('Error in sending images');

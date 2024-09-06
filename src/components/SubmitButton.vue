@@ -30,8 +30,7 @@ const submitPicture = async () => {
         if (isDone === true) photoStore.numberOfUnsentPallet += 1;
     }
     catch (e) {
-        
-        alert('error in sendImages', e);
+        alert('Failed to send the images', e);
     }
     emit('reset');
 };
