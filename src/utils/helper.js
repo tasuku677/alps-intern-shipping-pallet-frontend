@@ -16,16 +16,40 @@ function checkPalletId(password) {
     const randomValue = Math.random() < 0.5;
     return randomValue;
 }
-
-function getTimeStamp() {
+function getTimeStampISO(zoneSetting = 'LOCAL_WITH_DIF') {
     const date = new Date();
+    if (zoneSetting === 'UTC') {
+        return date.toISOString().split('.')[0] + 'Z';
+    }
+    else if (zoneSetting.includes('LOCAL')) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hour = String(date.getHours()).padStart(2, '0');
+        const minute = String(date.getMinutes()).padStart(2, '0');
+        const second = String(date.getSeconds()).padStart(2, '0');
+        if (zoneSetting.includes('DIF')) {
+            const timezoneOffset = -date.getTimezoneOffset();
+            const sign = timezoneOffset >= 0 ? '+' : '-';
+            const offsetHour = String(Math.floor(Math.abs(timezoneOffset) / 60)).padStart(2, '0');
+            const offsetMinute = String(Math.abs(timezoneOffset) % 60).padStart(2, '0');
+            return `${year}-${month}-${day}T${hour}:${minute}:${second}${sign}${offsetHour}:${offsetMinute}`;
+        }
+        return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+    }
+    else {
+        return 'Invalid zone setting';
+    }
+}
+
+function isoToPhotoTimestamp(isoString) {
+    const date = new Date(isoString);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const hour = String(date.getHours()).padStart(2, '0');
     const minute = String(date.getMinutes()).padStart(2, '0');
     const second = String(date.getSeconds()).padStart(2, '0');
-
     return `${year}${month}${day}${hour}${minute}${second}`;
 }
 
@@ -35,12 +59,4 @@ function checkNetworkConnection() {
     return navigator.connection;
 
 }
-
-function storeImage(imageData) {
-    return ;
-}
-export { checkEmployeeId, checkPalletId, getTimeStamp, checkNetworkConnection, storeImage };
-
-// invalid password: 間違った値は残しておく
-// valid password: 既にある値は上書き．次のフォームに移動する
-//　キーボードは出さない
+export { checkEmployeeId, checkPalletId, getTimeStampISO, isoToPhotoTimestamp, checkNetworkConnection};

@@ -1,13 +1,15 @@
-async function sendImages(photoBlobArray, employeeId, palletId) {
+
+async function sendImages(employeeId, palletId, photoBlobArray) {
     const formData = new FormData();
-    photoBlobArray.forEach((photo, index) => {
-        formData.append('blobArray', photo.data, photo.name);
-    });
     formData.append('employeeId', employeeId);
     formData.append('palletId', palletId);
+    photoBlobArray.forEach((photo, index) => {
+        formData.append(`isoTimeStampArray`, photo.isoTimeStamp);
+        formData.append('blobArray', photo.data, photo.name);
+    });
 
     try {
-        const response = await fetch('http://192.168.100.43:8000/photos', {
+        const response = await fetch('http://127.0.0.1:8000/api/v1/photos', {
             method: 'POST',
             body: formData,
         });
@@ -27,30 +29,3 @@ async function sendImages(photoBlobArray, employeeId, palletId) {
 //     console.log(response);
 // })();
 export { sendImages };
-
-
-
-// {
-//     palletId: 1,
-//     employeeId: 1,
-//     photos: [
-//         {
-//             name: 'photo1.jpg',
-//         },
-//         {
-//             name: 'photo2.jpg',
-//         },
-//     ]
-// },
-// {
-//     palletId: 2,
-//     employeeId: 2,
-//     photos: [
-//         {
-//             name: 'photo1.jpg',
-//         },
-//         {
-//             name: 'photo2.jpg',
-//         },
-//     ]
-// }

@@ -6,7 +6,6 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
-import { sendImages } from '../utils/sendImages';
 import { initializeDB, addData, deleteDatabase } from '../utils/operateDB';
 const idStore = useIdStore();
 const photoStore = usePhotoStore();
@@ -21,8 +20,9 @@ const submitPicture = async () => {
         employeeId: idStore.employeeId,
         palletId: idStore.palletId,
         currentSessionPhotos: photoStore.photos.map(photo => ({
+            data: photo.data,
             name: photo.name,
-            data: photo.data
+            isoTimeStamp: photo.isoTimeStamp,
         })),
     }
     try {

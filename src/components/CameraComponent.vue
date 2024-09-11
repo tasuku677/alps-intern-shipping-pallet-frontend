@@ -34,7 +34,7 @@
 import { ref, onMounted, watch } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
-import { getTimeStamp } from '../utils/helper';
+import { getTimeStampISO, isoToPhotoTimestamp } from '../utils/helper';
 
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiCamera, mdiDelete } from '@mdi/js';
@@ -95,9 +95,11 @@ const takePhoto = () => {
     //blob version
     canvas.value.toBlob(async (blob) => {
       if (blob) {
-        const photoName = `${idStore.palletId}_${getTimeStamp()}`;
+        const isoString = getTimeStampISO(); 
+        const timeStamp = isoToPhotoTimestamp(isoString);
+        const photoName = `${idStore.palletId}_${timeStamp}`;
         if (photoStore.photos.length === 0 || photoStore.photos[photoStore.photos.length - 1].name !== photoName) {
-          photoStore.addPhoto({ data: blob, name: photoName });
+          photoStore.addPhoto({ data: blob, name: photoName, isoTimeStamp: isoString });
           console.log('blob', blob);
         }
       }

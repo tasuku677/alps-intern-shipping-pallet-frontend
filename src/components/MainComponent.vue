@@ -61,7 +61,7 @@ const sendImageBackground = async () => {
     console.log('db in main', db);
     const unsentPallet = await getDataByIndex(db, 0); 
     console.log('unsentPallet', unsentPallet);  // alert('Data has been successfully submitted');
-    const response = await sendImages(unsentPallet.currentSessionPhotos, unsentPallet.employeeId, unsentPallet.palletId);
+    const response = await sendImages(unsentPallet.employeeId, unsentPallet.palletId, unsentPallet.currentSessionPhotos);
     // alert('response', response)
     if(response.status === 200) {
       const isDone =  await deleteData(db, unsentPallet.palletId);
