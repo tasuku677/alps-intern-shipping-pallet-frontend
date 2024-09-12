@@ -13,6 +13,10 @@ async function sendImages(employeeId, palletId, photoBlobArray) {
             method: 'POST',
             body: formData,
         });
+        if(!response.ok){
+            const error = await response.json();
+            return { status: response.status, message: error.message || 'Unknown error occured' };
+        }
         return response;
     } catch (error) {
         if (error instanceof TypeError) {

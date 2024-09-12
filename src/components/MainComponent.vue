@@ -38,7 +38,7 @@ import PalletIDInput from './PalletIDInput';
 import CameraComponent from './CameraComponent';
 import SubmitButton from './SubmitButton';
 
-import { initializeDB, updateData, getDataByIndex, getAllData, deleteData, deleteDatabase } from '../utils/operateDB';
+import { initializeDB, updateData, getDataByIndex, getAllData, countData, deleteData, deleteDatabase } from '../utils/operateDB';
 import { sendImages } from '../utils/sendImages';
 
 
@@ -60,13 +60,18 @@ const sendImageBackground = async () => {
     const db = await initializeDB();
     console.log('db in main', db);
     const unsentPallet = await getDataByIndex(db, 0); 
-    console.log('unsentPallet', unsentPallet);  // alert('Data has been successfully submitted');
+    console.log('unsentPallet', unsentPallet);
     const response = await sendImages(unsentPallet.employeeId, unsentPallet.palletId, unsentPallet.currentSessionPhotos);
-    // alert('response', response)
     if(response.status === 200) {
       const isDone =  await deleteData(db, unsentPallet.palletId);
-      if(isDone === true) photoStore.numberOfUnsentPallet -= 1;
+      // if(isDone === true) photoStore.decrementUnsentPallet();
+      if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
+    // if(response.status !== 200) {
+    //   const isDone =  await deleteData(db, unsentPallet.palletId);
+    //   // if(isDone === true) photoStore.decrementUnsentPallet();
+    //   if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
+    // }
     else {
       console.log('Error in sending images');
     }

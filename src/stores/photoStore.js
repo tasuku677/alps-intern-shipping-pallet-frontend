@@ -15,6 +15,15 @@ export const usePhotoStore = defineStore('photoStore', {
     },
     reset() {
       this.photos = [];
+    },
+    incrementUnsentPallet() {
+      this.numberOfUnsentPallet += 1;
+    },
+    decrementUnsentPallet() {
+      this.numberOfUnsentPallet -= 1;
+    },
+    updateUnsentPallet(number) {
+      this.numberOfUnsentPallet = number;
     }
   },
 });
