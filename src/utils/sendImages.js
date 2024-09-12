@@ -9,7 +9,7 @@ async function sendImages(employeeId, palletId, photoBlobArray) {
     });
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/v1/photos', {
+        const response = await fetch('/api/v1/photos', {
             method: 'POST',
             body: formData,
         });
