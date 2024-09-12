@@ -18,7 +18,8 @@
       <v-col cols="12" v-show="idStore.showCamera">
         <CameraComponent ref="cameraRef" />
       </v-col>
-
+      
+      <!-- Submit Button -->
       <v-col cols="3" v-show="photoStore.photos.length > 0">
         <SubmitButton @reset="resetComponents" />
       </v-col>
@@ -67,11 +68,6 @@ const sendImageBackground = async () => {
       // if(isDone === true) photoStore.decrementUnsentPallet();
       if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
-    // if(response.status !== 200) {
-    //   const isDone =  await deleteData(db, unsentPallet.palletId);
-    //   // if(isDone === true) photoStore.decrementUnsentPallet();
-    //   if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
-    // }
     else {
       console.log('Error in sending images');
     }

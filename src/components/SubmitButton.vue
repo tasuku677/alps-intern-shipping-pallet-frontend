@@ -6,7 +6,7 @@
 import { onMounted, onUnmounted } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
-import { initializeDB, addData, deleteDatabase } from '../utils/operateDB';
+import { initializeDB, addData, countData, deleteDatabase, updateData } from '../utils/operateDB';
 const idStore = useIdStore();
 const photoStore = usePhotoStore();
 
@@ -26,8 +26,8 @@ const submitPicture = async () => {
         })),
     }
     try {
-        const isDone = await addData(db, temp);
-        if (isDone === true) photoStore.numberOfUnsentPallet += 1;
+        const isDone = await updateData(db, temp);
+        if (isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
     catch (e) {
         alert('Failed to send the images', e);

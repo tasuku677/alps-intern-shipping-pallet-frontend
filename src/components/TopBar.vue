@@ -52,17 +52,17 @@ onMounted(async () => {
 @keyframes moveUp {
   0% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(5px);
   }
 
   50% {
     opacity: 0;
-    transform: translateY(-40px);
+    transform: translateY(-30px);
   }
 
   100% {
     opacity: 0;
-    transform: translateY(0);
+    transform: translateY(5px);
   }
 }
 </style>

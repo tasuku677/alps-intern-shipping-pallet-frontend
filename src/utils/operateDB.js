@@ -96,11 +96,11 @@ const getAllData = (db) => {
         }
     });
 }
-const countData = (db, imageName = undefined) => {
+const countData = (db, keyName = undefined) => {
     return new Promise((resolve, reject) => {
         const transaction = db.transaction(['MyObjectStore']);
         const objectStore = transaction.objectStore('MyObjectStore');
-        const request = objectStore.count(imageName);
+        const request = objectStore.count(keyName);
         request.onsuccess = function () {
             resolve(request.result);
         }
@@ -119,7 +119,6 @@ const updateData = (db, newData) => {
         request.onsuccess = function () {
             resolve(true);
         };
-
         request.onerror = function (event) {
             reject(false);
         };

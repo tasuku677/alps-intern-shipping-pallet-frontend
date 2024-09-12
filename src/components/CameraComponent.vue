@@ -4,7 +4,7 @@
       <video ref="video" width="80%" autoplay></video>
       <canvas ref="canvas" style="display: none;"></canvas>
       <v-btn :disabled="photoStore.photos.length >= 10" color="primary" @click="takePhoto" class="circular-btn">
-        <svg-icon type="mdi" :path="pathCamera"></svg-icon>
+        <v-icon>mdi-camera</v-icon>
       </v-btn>
       <p>
         {{ photoStore.photos.length }}
@@ -21,7 +21,9 @@
             </v-card-text>
             <v-card-actions>
               <v-btn color="red" variant="outlined" @click="removePhoto(photoStore.photos.length - 1 - index)">
-                <svg-icon type="mdi" :path="pathDelete" />Remove</v-btn>
+                <v-icon>mdi-delete</v-icon>
+                Remove
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -36,15 +38,8 @@ import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { getTimeStampISO, isoToPhotoTimestamp } from '../utils/helper';
 
-import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiCamera, mdiDelete } from '@mdi/js';
 
 let mediaStream = null;
-
-
-const pathCamera = ref(mdiCamera);
-const pathDelete = ref(mdiDelete);
-
 
 
 const idStore = useIdStore();
@@ -95,7 +90,7 @@ const takePhoto = () => {
     //blob version
     canvas.value.toBlob(async (blob) => {
       if (blob) {
-        const isoString = getTimeStampISO(); 
+        const isoString = getTimeStampISO();
         const timeStamp = isoToPhotoTimestamp(isoString);
         const photoName = `${idStore.palletId}_${timeStamp}`;
         if (photoStore.photos.length === 0 || photoStore.photos[photoStore.photos.length - 1].name !== photoName) {
@@ -129,7 +124,6 @@ watch(() => idStore.showCamera, (newVal) => {
 <style scoped>
 .custom-border {
   border: 0.1px solid #000;
-  /* 黒いボーダー */
 }
 
 .circular-btn {
