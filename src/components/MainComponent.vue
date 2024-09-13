@@ -15,14 +15,11 @@
       </v-col>
 
       <!-- Camera Component -->
-      <v-col cols="12" v-show="idStore.showCamera">
+      <v-col cols="12" v-show="idStore.showCamera" class="camera-container">
         <CameraComponent ref="cameraRef" />
+        <SubmitButton v-show="photoStore.photos.length > 0" @reset="resetComponents" class="submit-button"/>
       </v-col>
       
-      <!-- Submit Button -->
-      <v-col cols="3" v-show="photoStore.photos.length > 0">
-        <SubmitButton @reset="resetComponents" />
-      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -93,4 +90,13 @@ onUnmounted(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+.camera-container {
+  position: relative;
+}
+
+.submit-button {
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+}</style>

@@ -1,12 +1,12 @@
 <template>
-    <v-btn color="success" @click="submitPicture">Submit</v-btn>
+    <v-btn style="height:50px"color="success" @click="submitPicture">Submit</v-btn>
 </template>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
-import { initializeDB, addData, countData, deleteDatabase, updateData } from '../utils/operateDB';
+import { initializeDB, addData, countData, updateData } from '../utils/operateDB';
 const idStore = useIdStore();
 const photoStore = usePhotoStore();
 
@@ -14,7 +14,6 @@ const emit = defineEmits(['reset']);
 
 const submitPicture = async () => {
     let db = await initializeDB();
-
     const temp = {
         employeeId: idStore.employeeId,
         palletId: idStore.palletId,
@@ -35,3 +34,6 @@ const submitPicture = async () => {
 };
 
 </script>
+<style scoped>
+
+</style>
