@@ -1,13 +1,13 @@
 \<template>
-  <v-app-bar style="background-color: lightyellow;">
+  <v-app-bar style="background-color: rgb(0, 73, 135);">
     <v-container>
       <v-row>
         <v-col>
-          <v-toolbar-title>Export Pallet Check</v-toolbar-title>
+          <v-toolbar-title style="color: white; font-family: sans-serif;">Export Pallet Check</v-toolbar-title>
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="d-flex align-center justify-end">
-          <v-chip v-if="photoStore.numberOfUnsentPallet" color="red" class="auto-width-chip" style="border-radius: 50px;" @click="snackbar = true">
+          <v-chip v-if="photoStore.numberOfUnsentPallet" color="error" variant="flat" class="auto-width-chip" style="border-radius: 50px;" @click="snackbar = true">
             <v-icon class="arrow-icon">mdi-arrow-up</v-icon>
             {{ photoStore.numberOfUnsentPallet }}
           </v-chip>
@@ -39,6 +39,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
 .chip-text {
   white-space: nowrap;
   font-size: 0.8em;

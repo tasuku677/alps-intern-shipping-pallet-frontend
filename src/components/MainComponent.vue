@@ -77,7 +77,6 @@ const sendImageBackground = async () => {
 
 let intervalId;
 onMounted(async() => {
-  
   await sendImageBackground();
   intervalId = setInterval(sendImageBackground, 5000);
 });

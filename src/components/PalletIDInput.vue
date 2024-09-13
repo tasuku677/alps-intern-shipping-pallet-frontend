@@ -1,5 +1,12 @@
 <template>
-  <v-text-field v-model="idStore.palletId" label="Pallet ID" ref="palletIdInput" @input="handlePalletIdInput" autofocus>
+  <v-text-field 
+  v-model="idStore.palletId" 
+  label="Pallet ID" 
+  ref="palletIdInput" 
+  @keyup.enter="handlePalletIdInput"
+  @blur="handlePalletIdInput"
+  @focus="clearForm" 
+  autofocus>
     <template v-slot:label>
       <v-icon class="icon" >mdi-shipping-pallet</v-icon> Pallet ID
     </template>
@@ -15,19 +22,19 @@ const idStore = useIdStore();
 const palletIdInput = ref('');
 
 const handlePalletIdInput = () => {
-  idStore.palletId = idStore.palletId.slice(idStore.prePalletId.length);
-  idStore.prePalletId = idStore.palletId;
-
   if (checkPalletId(idStore.palletId)) {
-    idStore.setShowCamera(true);
     palletIdInput.value.$el.style.color = '#1976D2';
-    palletIdInput.value.blur();
+    idStore.setShowCamera(true);
   } else {
     palletIdInput.value.$el.style.color = 'red';
-    palletIdInput.value.focus();
+    idStore.setShowCamera(false);
   }
+  palletIdInput.value.blur();
 };
 
+const clearForm = () => {
+  idStore.palletId = '';
+};
 //After submitting the data, all components are reset. The pallet ID input field is focus on again.
 const focusPalletIdInput = () => {
   palletIdInput.value.focus();
