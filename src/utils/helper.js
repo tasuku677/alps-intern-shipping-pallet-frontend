@@ -1,20 +1,15 @@
+import DEFAULT_CONFIG from '../variable_config';
+
 function checkEmployeeId(employeeId) {
     // Generate a random boolean value
-    const randomValue = Math.random() < 0.5;
-    return randomValue;
+    const employeeMask = new RegExp(DEFAULT_CONFIG['EMPLOYEE_VALIDATION_MASK']);
+    return employeeMask.test(employeeId);
     // return true;
 }
 
-function checkPalletId(password) {
-    // if (!(password.startsWith('P') || password.startsWith('S') || password.startsWith('M'))) {
-    //     return false;
-    // }
-    // if (password.length < 10 || password.length > 20) {
-    //     return false;
-    // }
-    // return true;
-    const randomValue = Math.random() < 0.5;
-    return randomValue;
+function checkPalletId(palletId) {
+    const palletMask = new RegExp(DEFAULT_CONFIG['PALLET_VALIDATION_MASK']);
+    return palletMask.test(palletId);
 }
 function getTimeStampISO(zoneSetting = 'LOCAL_WITH_DIF') {
     const date = new Date();
