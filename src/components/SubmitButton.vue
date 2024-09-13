@@ -14,7 +14,6 @@ const emit = defineEmits(['reset']);
 
 const submitPicture = async () => {
     let db = await initializeDB();
-    // await deleteDataAll(db);
 
     const temp = {
         employeeId: idStore.employeeId,

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="d-flex flex-column align-center mb-5">
-      <video ref="video" width="80%" autoplay></video>
+    <div id="camera" class="d-flex flex-column align-center mb-5">
+      <video ref="video" width="100%" autoplay></video>
       <canvas ref="canvas" style="display: none;"></canvas>
       <v-btn :disabled="photoStore.photos.length >= 10" color="primary" @click="takePhoto" class="circular-btn">
-        <v-icon>mdi-camera</v-icon>
+        <v-icon size="x-large">mdi-camera</v-icon>
       </v-btn>
       <p>
         {{ photoStore.photos.length }}
@@ -50,8 +50,8 @@ const canvas = ref(null);
 const activateCamera = () => {
   const constraints = {
     video: {
-      width: { ideal: 1920 },
-      height: { ideal: 1080 },
+      width: { ideal: 960 },
+      height: { ideal: 960 },
       facingMode: 'environment',
     },
   };
@@ -122,6 +122,10 @@ watch(() => idStore.showCamera, (newVal) => {
 </script>
 
 <style scoped>
+#camera {
+  border: #000 1px solid;
+  padding: 0px;
+}
 .custom-border {
   border: 0.1px solid #000;
 }

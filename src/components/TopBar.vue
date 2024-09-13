@@ -3,7 +3,7 @@
     <v-container>
       <v-row>
         <v-col>
-          <v-toolbar-title>Barcode Scanner</v-toolbar-title>
+          <v-toolbar-title>Export Pallet Check</v-toolbar-title>
         </v-col>
         <v-spacer></v-spacer>
         <v-col class="d-flex align-center justify-end">
