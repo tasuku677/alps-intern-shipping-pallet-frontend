@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { getTimeStampISO, isoToPhotoTimestamp } from '../utils/helper';
@@ -96,6 +96,10 @@ const takePhoto = () => {
         if (photoStore.photos.length === 0 || photoStore.photos[photoStore.photos.length - 1].name !== photoName) {
           photoStore.addPhoto({ data: blob, name: photoName, isoTimeStamp: isoString });
           console.log('blob', blob);
+          
+          nextTick(() => {
+            video.value.scrollIntoView({ block: "center", inline: "nearest", behavior: 'smooth' });
+          });
         }
       }
     }, 'image/png');
@@ -126,6 +130,7 @@ watch(() => idStore.showCamera, (newVal) => {
   border: #000 1px solid;
   padding: 0px;
 }
+
 .custom-border {
   border: 0.1px solid #000;
 }

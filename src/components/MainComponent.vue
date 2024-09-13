@@ -51,8 +51,6 @@ const resetComponents = async () => {
   idStore.reset();
   photoStore.reset();
   palletIdInput.value.focusPalletIdInput();
-
-  // console.log('palletIdInput.value', palletIdInput.value); 
 }
 
 const sendImageBackground = async () => {
