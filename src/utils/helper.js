@@ -1,4 +1,4 @@
-import getConfig from '../variable_config';
+import {getConfig} from '@/variable_config';
 
 function checkEmployeeId(employeeId) {
     // Generate a random boolean value
