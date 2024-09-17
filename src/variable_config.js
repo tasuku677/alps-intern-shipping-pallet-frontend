@@ -14,4 +14,4 @@ function getConfig(name, defaultValue = null, wrapper = x => x) {
     return wrapper(value);
   }
 
-export { getConfig, DEFAULT_CONFIG };
+export { getConfig };

@@ -1,14 +1,13 @@
-import {DEFAULT_CONFIG} from '../variable_config';
-
+import {getConfig} from '@/variable_config';
 function checkEmployeeId(employeeId) {
     // Generate a random boolean value
-    const employeeMask = new RegExp(DEFAULT_CONFIG['EMPLOYEE_VALIDATION_MASK']);
+    const employeeMask = new RegExp(getConfig['EMPLOYEE_VALIDATION_MASK']);
     return employeeMask.test(employeeId);
     // return true;
 }
 
 function checkPalletId(palletId) {
-    const palletMask = new RegExp(DEFAULT_CONFIG['PALLET_VALIDATION_MASK']);
+    const palletMask = new RegExp(getConfig['PALLET_VALIDATION_MASK']);
     return palletMask.test(palletId);
 }
 function getTimeStampISO(zoneSetting = 'LOCAL_WITH_DIF') {
