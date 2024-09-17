@@ -63,8 +63,14 @@ const sendImageBackground = async () => {
       // if(isDone === true) photoStore.decrementUnsentPallet();
       if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
+    else if(response.status === 500 || response.status === 503) {
+      confirm("Failed in connecting server. Please check the network connection.");
+    }
     else {
-      console.log('Error in sending images');
+      if(confirm("The data is not acceptable. Do you want to delete the data?")) {
+        const isDone =  await deleteData(db, unsentPallet.palletId);
+        if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
+      }
     }
     
   }

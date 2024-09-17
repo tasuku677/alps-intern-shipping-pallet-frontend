@@ -1,4 +1,4 @@
-import DEFAULT_CONFIG from '../variable_config';
+import {DEFAULT_CONFIG} from '../variable_config';
 
 function checkEmployeeId(employeeId) {
     // Generate a random boolean value
@@ -48,10 +48,4 @@ function isoToPhotoTimestamp(isoString) {
     return `${year}${month}${day}${hour}${minute}${second}`;
 }
 
-function checkNetworkConnection() {
-    // Perform network connection check here
-    // Return true if network is connected, false otherwise
-    return navigator.connection;
-
-}
-export { checkEmployeeId, checkPalletId, getTimeStampISO, isoToPhotoTimestamp, checkNetworkConnection};
+export { checkEmployeeId, checkPalletId, getTimeStampISO, isoToPhotoTimestamp};
