@@ -64,7 +64,7 @@ const sendImageBackground = async () => {
       if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
     else if(response.status === 500 || response.status === 503) {
-      confirm("Failed in connecting server. Please check the network connection.");
+      console.log("Failed in connecting server. Please check the network connection.");
     }
     else {
       if(confirm("The data is not acceptable. Do you want to delete the data?")) {

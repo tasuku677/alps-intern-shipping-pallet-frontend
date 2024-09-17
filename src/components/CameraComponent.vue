@@ -127,8 +127,9 @@ watch(() => idStore.showCamera, (newVal) => {
 
 <style scoped>
 #camera {
-  border: #000 1px solid;
-  padding: 0px;
+  /* border: #000 1px solid; */
+  padding: 5px;
+  background-color: #000;
 }
 
 .custom-border {
