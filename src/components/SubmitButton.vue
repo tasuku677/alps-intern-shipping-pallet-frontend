@@ -1,5 +1,5 @@
 <template>
-    <v-btn style="height:50px"color="success" @click="submitPicture">Submit</v-btn>
+    <v-btn style="height:50px" color="success" @click="submitPicture">Submit</v-btn>
 </template>
 
 <script setup>
@@ -24,16 +24,18 @@ const submitPicture = async () => {
         })),
     }
     try {
-        const isDone = await updateData(db, temp);
+        const isDone = await addData(db, temp);
         if (isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
     catch (e) {
-        alert('Failed to send the images', e);
+        if (confirm("This pallet has already been submitted before. Do you want to overwrite it?")) {
+            await updateData(db, temp);
+        } else {
+            console.log("This data has been discarded.")
+        }
     }
     emit('reset');
 };
 
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

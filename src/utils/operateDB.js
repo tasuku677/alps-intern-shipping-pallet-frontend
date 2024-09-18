@@ -8,7 +8,7 @@ const initializeDB = () => {
         const request = window.indexedDB.open("MyTestDatabase", 1);
         request.onsuccess = (event) => {
             const db = event.target.result;
-            console.log("Success to open database\n");
+            // console.log("Success to open database\n");
             // alert('Success to open database');
             resolve(db);
         };
