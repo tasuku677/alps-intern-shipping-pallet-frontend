@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
 import { useIdStore } from '../stores/idStore';
 import { usePhotoStore } from '../stores/photoStore';
 import { initializeDB, addData, countData, updateData } from '../utils/operateDB';

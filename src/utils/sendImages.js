@@ -20,7 +20,7 @@ async function sendImages(employeeId, palletId, photoBlobArray) {
         return response;
     } catch (error) {
         if (error instanceof TypeError) {
-            console.error('Network error or request failed:', error.message);
+            console.error(error.message);
             return { status: 503, message: 'Service Unavailable' }; // 503 Service Unavailable
         } else {
             console.error('Unexpected error:', error.message);

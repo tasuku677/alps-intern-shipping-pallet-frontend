@@ -63,16 +63,14 @@ const sendImageBackground = async () => {
       // if(isDone === true) photoStore.decrementUnsentPallet();
       if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
-    else if(response.status === 500 || response.status === 503) {
-      console.log("Failed in connecting server. Please check the network connection.");
+    else if(response.status === 421 || response.status === 422) {
+      alert(response.message, 'The data will be deleted');
+      const isDone =  await deleteData(db, unsentPallet.palletId);
+      if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
     }
     else {
-      if(confirm("The data is not acceptable. Do you want to delete the data?")) {
-        const isDone =  await deleteData(db, unsentPallet.palletId);
-        if(isDone === true) photoStore.updateUnsentPallet(await countData(db));
-      }
+      console.log(response.message);
     }
-    
   }
 };
 
