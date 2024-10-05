@@ -24,12 +24,9 @@ async function sendImages(employeeId, palletId, photoBlobArray) {
             return { status: 503, message: 'Service Unavailable' }; // 503 Service Unavailable
         } else {
             console.error('Unexpected error:', error.message);
-            return { status: 500, message: 'Internal Server Error' }; // 500 Internal Server Error
+            return { status: 500, message: 'There are some problems between frontend and backend.' }; // 500 Internal Server Error
         }
     }
 }
-// (async () => {
-//     const response = await sendImages('wogiweimopwopomciewpmcei', '1', '1');
-//     console.log(response);
-// })();
+
 export { sendImages };
