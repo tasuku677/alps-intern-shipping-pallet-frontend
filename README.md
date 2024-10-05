@@ -1,5 +1,5 @@
-# pallet evidence
-This folder is frontend side of the project.
+# Pallet evidence
+This repository is for the frontend of the project
 
 ## Overview
 This project is designed to manage and track shipping pallet information in a warehouse. It stores photo data in a local folder, along with pallet IDs, employee IDs, and photo names in a JSON file. Additionally, the backend server updates the database with new records corresponding to the stored photos each time photos are submitted from the client side.
@@ -12,7 +12,7 @@ This project is designed to manage and track shipping pallet information in a wa
 
 
 ## Getting started
-On this frontend side, to start this application, run a following command.
+To start the frontend of this application, run the following command:
 ```
 npm run dev
 ```
