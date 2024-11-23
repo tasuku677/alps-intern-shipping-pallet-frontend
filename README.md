@@ -1,4 +1,4 @@
-# Pallet evidence
+# Export Pallet Evidence
 This repository is for the frontend of the project
 
 ## Overview
